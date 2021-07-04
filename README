@@ -1,0 +1,81 @@
+Source Code:
+-------------
+Code can be found in: https://github.com/mattigot/crawler.git (if you are reading this file you
+probably already have it :))
+
+
+Prerequisites:
+-------------
+- Must have python3 and  pip3 installed
+- Before running the script must install python packages:
+	> pip3 install -r requirements.txt
+
+
+Running:
+--------
+Usage:
+	> web_crawler.py uage
+Run:
+	> web_crawler.py <url> <depth>
+
+Overview:
+---------
+This program implements a simple web crawler. The purpose of the crawling
+is to calculate and output some measurements of the crawled pages.
+
+For each page, calculate the ratio of same-domain links that it contains, as a number
+in [0, 1].
+
+Design:
+-------
+There are the main modules:
+
+Url:
+	- A class with static functions, containing basic url functionality (such as downloading)
+	- This is a "helper" lib that will be used by different modules.
+	- The reason i decided to make this static, is that  in order to supply these capabilities
+	  there is no need to save info or a state.
+	- This is not related to crawling or anything else, so i put it in a separate class so we can use
+	  it in the future for other use cases.
+
+WebPage:
+	- A class that implements all the logic a single web page needs
+		- Downloads the page from a given url and save it to the Disk.
+		- Parses the url to extract the relevant info for future use.
+		- Saves all the static links for next crawling
+		- Filters/Manipulates the given results to match the requirements.
+		- Ranks the page
+	- Each functionality is separate and trying to not be dependent of the others
+	- The reason this is implemented this way, is to take into consideration of the future, in case
+	  anyone changes the requirements, so each functionality is stand alone, and can be overdided,
+	  or add OOO inheritance, and have basic webpages, and more advance (such as webpages that can
+	  download hidden or dynamic links, or use this page for other purposes not related to crawling at all.
+	- The pages are saved on the disk for future use cases (in this program i did not really need to
+	  save them to the disk.
+
+Crawler:
+	- A class the gets a first web page, and starts crawling to a given depth
+	- The class implements:
+		- Crawling
+		- Writing the output to a document
+	- The different functionalities are separate so in the future you can add more advance crawler,
+	  that can inherit from the basic one.
+
+Config:
+	- I planed on making a config class as well, for obvious reasons for the future to add new logic
+	  in an easy way.
+	- I did not have time to do so, so i just add an option to add a config.json file with parameters
+	  to prepare for more parameters in the future.
+
+web_crawler.py:
+	- Main file
+	- Validates the user input (makes sure the first url is ok, and the depth is valid)
+	- Get the user parameters - i used the basic sys.argv for user parameters. I wanted to really use
+	  python libs for parsing the args (such as argparse) but the requirement of the program said not
+	  to pass the parameters with param_name=value or --parm_name value so i did not use this
+	- Crawl the url with the Crawler class.
+Notes:
+------
+- Environment: Wanted to add a Docker container or a Ansible playbook for setting up the environment to include already
+			   python3* and pip3 required for running this.
+
