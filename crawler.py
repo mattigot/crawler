@@ -122,7 +122,6 @@ class Crawler:
 
         with open(res_file, 'w') as f:
             for rank in self.ranks:
-                print("%s, %s, %s" %(rank[0], rank[1], rank[2]))
                 f.write("{url}\t{rank}\t{depth}\n".format(url=rank[0], depth=rank[1], rank=rank[2]))
 
 
