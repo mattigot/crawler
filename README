@@ -18,6 +18,10 @@ Usage:
 Run:
 	> web_crawler.py <url> <depth>
 
+Output:
+------
+The results are stored by default under <execution location>/webpages//crawl_res.csv
+
 Overview:
 ---------
 This program implements a simple web crawler. The purpose of the crawling
